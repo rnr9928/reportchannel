@@ -237,3 +237,101 @@ components 폴더는 기능들을 구현한 코드들이 들어있습니다
 
 
 기능들을 import 하고 적용시킨 모습
+
+--------------------------------------------------------------------------------------------------------------
+
+# comment  설명
+
+![1](https://github.com/rnr9928/reportchannel/assets/97073355/1b91d078-cfce-49d0-8471-f856bccbda9c)
+
+
+**각 파일의 기능**
+
+## **Comment.jsx**
+
+![1 (1)](https://github.com/rnr9928/reportchannel/assets/97073355/24c241d4-43f3-4f28-ac14-874654a2707a)
+
+
+                            수정 , 삭제 , 답글  기능이 담겨진 댓글 컴포넌트 입니다
+
+## **Comment2.js**
+
+![1 (2)](https://github.com/rnr9928/reportchannel/assets/97073355/ff3309c3-27e9-4e4e-ace2-0d54df30e79e)
+
+
+수정 , 삭제, 답글 기능을 **활성화** 하는 기능들이 담겨져 있습니다
+
+자신이 쓴  덧글만 수정 삭제가 가능합니다
+
+(true 상태일때 활성화)
+
+## **WriteSection.js**
+
+![1 (3)](https://github.com/rnr9928/reportchannel/assets/97073355/304e1ff1-3a8c-4555-9b5e-0dfe60ea0833)
+
+
+댓글을 작성하는 ui가 들어있습니다.
+
+# Moment 사용
+
+![1 (4)](https://github.com/rnr9928/reportchannel/assets/97073355/da62b7f2-1f9c-4c5a-87c5-96f77b4aa3bd)
+
+
+moment 라이브러리를 이용하여 날짜와 시간표시를 구현했습니다
+
+**`timeData`** 변수에는 **댓글 작성시간**을 가져옵니다
+
+**`currentMoment`와 `dataMoment`** 사이의 날짜 차이를  계산하여 “day”를 구했습니다
+
+**dayGap**이 10이상인 경우 **`timeData`** 값을 "**YYYY.MM.DD**" 형식으로 변환시켰습니다
+
+10일 미만일 경우 “일전”으로 표시했습니다
+
+# react-query 사용
+
+![Untitled](https://github.com/rnr9928/reportchannel/assets/97073355/8701e0a0-d86c-4b68-9c1d-acbbdd1e3585)
+
+
+- **기존의 비동기  로직 처리 (ex. redux ,  redux-saga)**
+    - 성공, 실패  모두 일일히 선언
+    - 서버  데이터가 fetch를 수행해야만 최신 데이터 상태
+        - 여러 컴포넌트에서 최신 데이터를 받아올려면 그  만큼 fetch수행
+- r**eact-query 사용**
+    
+    
+![1 (5)](https://github.com/rnr9928/reportchannel/assets/97073355/a873fffd-fc29-487a-9537-477a872b2a6e)
+
+    
+
+• useQuery의 반환 값을 활용하여 성공, 실패 처리 가능 ( isFetching, isLoading, error, state 등 )
+
+- useQuery 첫 번째 인자인 `QueryKey`에 따라서 캐싱 처리. 캐싱된 쿼리의 `QueryKey`와 동일한 요청을 하는 쿼리는 같은 것으로 인식하여 fetch하지 않고 캐싱된 쿼리 그대로 사용.
+    - 여기서 `QueryKey`는 user
+    - string, array, object 등 유니크한 값이면 된다.
+    - array일 경우 순서가 서로 바뀌어도 unique
+    - object는 순서가 바뀌면 같은 값으로 인식
+- 두 번째 인자 fetcher는 프로미스를 반환하는 함수여야 한다.
+- 세 번째 인자 options에는 캐시 만료 시점, refetch 시점, 초기값 등을 설정할 수 있으며 생략 가능하다.
+
+---
+
+![1 (6)](https://github.com/rnr9928/reportchannel/assets/97073355/8d6ec8d9-48e4-4dc7-84b5-b24f953e91a7)
+
+
+리액트 쿼리 기능중 하나인 **useMutation()**을 사용
+
+서버와의 데이터 동기화를 신경쓰지 않고 먼저 사용자에게 성공 시 UI를 보여준 후
+
+요청의 결과가 오면 성공/실패 여부에 따라 ui 업데이트
+
+• 예: 인스타그램의 좋아요 기능, 카카오톡이 일단 전송된 후 성공, 취소/재전송 창이 나중에 뜨는 것
+
+## 문제
+
+데이터가 캐싱되어 있어서 
+
+로그아웃을해도 댓글이 작성되는 문제가 있었다 
+
+## 해결
+
+onSuccess 콜백으로 invalidateQueries를 사용해서 “myChannelDetailComments” 키값에  해당  데이터를 적용시키면  해당 데이터는 만료된 상태가 되어 refetching 된다
