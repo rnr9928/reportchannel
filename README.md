@@ -105,3 +105,135 @@ REACT_APP_FABRIC_URL="http://localhost:8088"
     <img width="668" alt="pull6" src="https://user-images.githubusercontent.com/107897812/211038661-58c71630-b4f2-49ff-9c95-88b2f1da6d7b.png">
 
     <img width="665" alt="pull7" src="https://user-images.githubusercontent.com/107897812/211038667-c04b4990-f1f9-49c6-b64f-3a6cb5df51e4.png">
+
+
+# mvc 패턴을 이용한 기능 분리
+
+## mvc패턴이 나오게 된 계기
+
+과거에 수많은 개발자들이 수많은 프로그램들을 짰는데
+
+프로그램들을 짤수록 코드들이 복잡해지고 코드를 파악하기도 힘들고
+
+나중에 기능을 수정할 때 대부분의 코드를 갈아 엎아야 하는 경우가 많다고 합니다
+
+한마디로 유지보수가 매우 불편한 경우가 많이있었죠
+
+그렇게 계속  코드를 짜다가  비슷한 것끼리 나누기 시작했고
+
+이렇게 코드 구성을 하니 유지보수가 편하다라는  걸 느끼게 되었죠
+
+코드를 짤 때마다 점점 패턴들의  규칙성이  보이기 시작한겁니다
+
+그렇게 그 패턴들을 하나의 공식처럼 만들어서 나온게 바로이 MVC 패턴
+
+요약하자면   **MVC 패턴은**
+
+유지보수가 편해지는 코드 구성 방식 ' 이라고 보시면 됩니다.
+
+MVC패턴 구조
+
+![image](https://github.com/rnr9928/reportchannel/assets/97073355/d8574389-f398-4163-b22f-3d8d24ea1b11)
+
+
+1. 먼저 사용자가 구글에 '코딩'이라고 검색
+
+2. 그러면 Controller는 검색결과를 달라고  Model 한테 요청
+
+→ Model은 검색결과를 찾고 다시 Controller에게 전달
+
+3. Controller는 검색결과를 View에게 전달
+
+4.View는 사용자에게 이쁘게 나눠서 보여준다
+
+여기서 알아야 하는게 **M**odel  ,  **V**iew , **C**ontroller들의 역할 입니다
+
+Model은 데이터
+
+즉, 데이터와 관련된 일을 하는 곳 입니다
+
+Controller는 View와Model의 중개자 역할( 이어주는 역할 )을 하고 있는 것을 알 수 있죠
+
+View는 사용자한테 보여지는 부분을 담당합니다
+
+그럼 이제
+
+MVC 패턴을  지키면서 코딩 하는 방법을 알아봅시다.
+
+**1. Model은 Controller와 View에 의존하지 않는다**
+
+쉽게 말하면
+
+모델 내부에 컨트롤러와 뷰에 관련된 코드가 있으면 안된다라는 것인데.
+
+모델은 데이터가 관련된 부분이니
+
+언제든 깔끔하고 정제된 데이터를 꺼낼 쓸수 있게 하기 위해서이다
+
+**2. View는 Model에만 의존해야하고 Controller에는 의존하면 안된다.**
+
+뷰 내부에는 모델의 코드만 있을 수 있고
+
+컨트롤러에 코드가 있으면 안된다.
+
+**3. View가 Model로 부터 데이터를 받을 때는**
+
+**사용자마다 다르게 보여줘야하는 데이터에 대해서만 받아야한다**
+
+사진으로 예시를 보자면
+
+![image (1)](https://github.com/rnr9928/reportchannel/assets/97073355/a346fddc-ccef-48af-a5b7-df3b2069faec)
+
+
+빨간색으로 되있는 부분은 사용자마다 다르게 보여줘야하는 부분이죠
+
+이렇게 View는 사용자한테 보이는 UI와
+
+Model로부터  받은 데이터가 합쳐져 만들어진 화면입니다
+
+주문하기 글씨 , 배경색 등은 Model로부터 받아오면 안되고
+
+View가 자체적으로 가지고 있어야하는 정보들이죠
+
+💡  데이터를 받을 때 반드시 Controller에서 받아야 합니다!
+
+**4. Controller는 Model과 View에 의존해도 된다**
+
+컨트롤러는 모델과 뷰의 중개자역할(이어주는역할)을 하면서
+
+전체적인 로직을 구성하기 때문입니다
+
+Model은
+
+데이터의 형식을 지정하고 , 저장하고 불러오는 작업들에 관한 코드들이
+
+View는
+
+Html , css 요소가
+
+Controller는
+
+Model 과 View를 연결해주는 부분이라고 생각하시면 됩니다
+
+# 적용해보기
+
+![1](https://github.com/rnr9928/reportchannel/assets/97073355/aa2e32f5-538a-49b6-81a9-9a2c8020d622)
+
+
+mvc 패턴을 숙지하면서 ui와 기능들을  따로 분리하면서 개발했습니다
+
+![1 (1)](https://github.com/rnr9928/reportchannel/assets/97073355/e3c2a433-6b21-4f7d-9c0c-41bc17026742)
+
+![1 (2)](https://github.com/rnr9928/reportchannel/assets/97073355/bad505fc-9d44-41a2-b25c-d6449cba854b)
+
+
+page폴더에는 웹 페이지 안에 있는 기능들을 보여주는 ui 입니다
+
+components 폴더는 기능들을 구현한 코드들이 들어있습니다
+
+![제목 없음](https://github.com/rnr9928/reportchannel/assets/97073355/088a3c86-e142-4a79-99f4-060b65b48f9d)
+
+![제목 없음 (1)](https://github.com/rnr9928/reportchannel/assets/97073355/da39c7ed-59e6-404d-a13c-46b195d8f9b3)
+
+
+기능들을 import 하고 적용시킨 모습
