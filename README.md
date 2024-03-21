@@ -1,11 +1,4 @@
 
-
-## fork해온 레퍼지토리의 main브런치와 merge
-
-    <img width="668" alt="pull6" src="https://user-images.githubusercontent.com/107897812/211038661-58c71630-b4f2-49ff-9c95-88b2f1da6d7b.png">
-
-    <img width="665" alt="pull7" src="https://user-images.githubusercontent.com/107897812/211038667-c04b4990-f1f9-49c6-b64f-3a6cb5df51e4.png">
-
 # mvc 패턴을 이용한 기능 분리
 
   **MVC 패턴**
