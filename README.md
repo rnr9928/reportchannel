@@ -174,8 +174,8 @@ moment 라이브러리를 이용하여 날짜와 시간표시를 구현했습니
 
 • 예: 인스타그램의 좋아요 기능, 카카오톡이 일단 전송된 후 성공, 취소/재전송 창이 나중에 뜨는 것
 
-로그아웃을해도 댓글이 작성되는 문제가 있었다 
 
-## 해결
+## 캐싱
 
-onSuccess 콜백으로 invalidateQueries를 사용해서 “myChannelDetailComments” 키값에  해당  데이터를 적용시키면  해당 데이터는 만료된 상태가 되어 refetching 된다
+로그아웃을해도 댓글이 작성되는 문제가 있었다
+onSuccess 콜백으로 invalidateQueries를 사용해서 “myChannelDetailComments” 키값에    해당  데이터를 적용시키면  해당 데이터는 만료된 상태가 되어 refetching 된다
